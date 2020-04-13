@@ -254,15 +254,26 @@ const updateShippingMethod = async (
 
     const basketClient = await getBasketClient(config, context);
 
-    return basketClient.updateShippingMethodForShipment({
-        parameters: {
-            basketId: basketId,
-            shipmentId: shipmentId,
-        },
-        body: {
-            id: shippingMethodId,
-        },
-    });
+    let basket = await basketClient
+        .updateShippingMethodForShipment({
+            parameters: {
+                basketId: basketId,
+                shipmentId: shipmentId,
+            },
+            body: {
+                id: shippingMethodId,
+            },
+        })
+        .catch(e => {
+            logger.error(
+                `Error in updateShippingMethodForShipment() for shipmentId: ${shipmentId}`,
+            );
+            throw e;
+        });
+
+    basket = await getFullProductItems(basket, config, context);
+
+    return basket;
 };
 
 const removeItemFromBasket = async (

@@ -14,6 +14,9 @@ export default class Basket extends LightningElement {
     basket = {};
     shippingMethods = [];
     selectedShippingMethodId;
+    removeFromBasketSucceed = false;
+    showRemoveItemToast = false;
+    showShippingToast = false;
 
     @wire(useQuery, {
         query: GET_BASKET,
@@ -57,26 +60,42 @@ export default class Basket extends LightningElement {
         return this.basket.selectedShippingMethodId;
     }
 
-    @wire(useMutation, {
-        mutation: REMOVE_ITEM_FROM_BASKET,
-        lazy: true,
-    })
+    @wire(useMutation, { mutation: REMOVE_ITEM_FROM_BASKET })
     removeItemFromBasket;
 
     removeHandler(event) {
         const itemId = event.detail.itemId;
         const variables = { itemId };
+
+        // to test toast message
+        // const productId = 0;
+        // const variables = { productId };
+
         this.removeItemFromBasket.mutate({ variables }).then(() => {
-            this.basket = {
-                ...this.basket,
-                ...this.removeItemFromBasket.data.removeItemFromBasket,
-            };
-            this.products = [...this.basket.products];
+            if (this.removeItemFromBasket.error) {
+                this.showRemoveItemToast = true;
+                this.removeFromBasketSucceed = false;
+            } else {
+                this.removeFromBasketSucceed = true;
+                this.basket = {
+                    ...this.basket,
+                    ...this.removeItemFromBasket.data.removeItemFromBasket,
+                };
+                this.products = [...this.basket.products];
+            }
         });
     }
 
     updateBasket(event) {
         this.basket = { ...this.basket, ...event.detail.updatedBasket };
+        if (!this.basket) {
+            this.showShippingToast = true;
+        }
         this.products = event.detail.updatedBasket.products;
+    }
+
+    toastMessageDisplayed() {
+        this.showRemoveItemToast = false;
+        this.showShippingToast = false;
     }
 }

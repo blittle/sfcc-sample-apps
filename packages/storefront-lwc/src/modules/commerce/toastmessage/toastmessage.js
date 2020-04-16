@@ -27,4 +27,8 @@ export default class ToastMessage extends LightningElement {
     }
     @api successmessage;
     @api failmessage;
+
+    renderedCallback() {
+        window.addEventListener('removelineitem');
+    }
 }

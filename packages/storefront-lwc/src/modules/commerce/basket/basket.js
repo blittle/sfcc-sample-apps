@@ -16,6 +16,7 @@ export default class Basket extends LightningElement {
     selectedShippingMethodId;
     removeFromBasketSucceed = false;
     showRemoveItemToast = false;
+    shippingMethodChangeSucceed = false;
     showShippingToast = false;
 
     @wire(useQuery, {
@@ -67,10 +68,6 @@ export default class Basket extends LightningElement {
         const itemId = event.detail.itemId;
         const variables = { itemId };
 
-        // to test toast message
-        // const productId = 0;
-        // const variables = { productId };
-
         this.removeItemFromBasket.mutate({ variables }).then(() => {
             if (this.removeItemFromBasket.error) {
                 this.showRemoveItemToast = true;
@@ -90,8 +87,8 @@ export default class Basket extends LightningElement {
         this.basket = { ...this.basket, ...event.detail.updatedBasket };
         if (!this.basket) {
             this.showShippingToast = true;
+            this.shippingMethodChangeSucceed = false;
         }
-        this.products = event.detail.updatedBasket.products;
     }
 
     toastMessageDisplayed() {

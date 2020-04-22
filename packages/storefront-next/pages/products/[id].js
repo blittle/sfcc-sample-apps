@@ -75,7 +75,7 @@ const ProductQuery = gql`
 
 export default function Product({ resp }) {
     if (resp && resp.data && resp.data.product) {
-        if (!resp.data.product) console.log('die')
+        if (!resp.data.product) console.log('die');
         return (
             <Layout>
                 <ProductDetail product={resp.data.product} />
@@ -87,14 +87,13 @@ export default function Product({ resp }) {
 }
 
 export const getStaticPaths = async () => {
-    const ids = [
-        '25592581M',
-        '25752981M',
-        '25762732M',
-        '25553417M',
-        '25686514M',
-        '25720044M',
-    ];
+    // '25592581M',
+    // '25752981M',
+    // '25762732M',
+    // '25553417M',
+    // '25686514M',
+    // '25720044M',
+    const ids = [];
     return { paths: ids.map(id => ({ params: { id } })), fallback: true };
 };
 

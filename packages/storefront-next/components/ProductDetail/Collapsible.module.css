@@ -1,0 +1,39 @@
+.collapsible :global(.card) {
+    border: 0 none;
+    border-top: 1px solid #999;
+}
+.collapsible :global(.card .card-header) {
+    border-bottom: 0 none;
+    padding-top: 1.25em;
+    padding-bottom: 1.25em;
+    padding-left: 0.625em;
+}
+@media (max-width: 767px) {
+    .collapsible :global(.card .card-header) {
+        padding-top: 0.625em;
+        padding-bottom: 0.625em;
+    }
+}
+@media (min-width: 768px) {
+    .collapsible :global(.card .card-header) {
+        padding-top: 0.9375em;
+        padding-bottom: 0.9375em;
+    }
+}
+.collapsible :global(.card .card-body) {
+    padding-top: 0;
+    padding-left: 1.25em;
+}
+
+.collapsible :global(.title::after) {
+    float: right;
+    content: '\f078';
+    font-family: 'FontAwesome';
+    font-size: medium;
+}
+
+.collapsible :global(.title.active::after) {
+    content: '\f077';
+    margin-top: -0.125em;
+    font-size: medium;
+}

@@ -1,1 +1,1 @@
-export { Logger, LEVELS, LOGGER_KEY } from './logger';
+export { Logger, LEVELS } from './logger';

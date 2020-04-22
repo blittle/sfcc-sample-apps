@@ -9,8 +9,8 @@
     "talonVersion": "0.18.12"
   },
   "scripts": {
-    "build": "lerna run build --stream",
-    "build:app": "lerna run build --scope storefront-lwc --stream",
+    "build": "lerna run build --stream --concurrency 1",
+    "build:app": "lerna run build --scope storefront-next --stream",
     "lint": "lerna run lint --stream",
     "lint:fix": "lerna run lint:fix --stream",
     "clean": "lerna run clean --stream",
@@ -18,7 +18,7 @@
     "test": "lerna run test:unit --stream",
     "test:watch": "lerna run test:unit:watch --stream",
     "start": "yarn start:lwc",
-    "start:dev": "lerna run start:dev --scope storefront-lwc --stream",
+    "start:dev": "lerna run dev --scope storefront-next --stream",
     "start:watch": "yarn start:lwc:watch",
     "stop": "yarn stop:lwc",
     "start:lwc": "lerna run start --scope storefront-lwc --stream",
@@ -30,7 +30,7 @@
       "packages/sfcc-base",
       "packages/@sfcc-core/*",
       "packages/@sfcc-bff/*",
-      "packages/storefront-lwc"
+      "packages/storefront-next"
     ],
     "nohoist": [
       "**/bootstrap",

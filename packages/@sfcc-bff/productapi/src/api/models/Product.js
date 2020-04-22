@@ -6,8 +6,8 @@
 */
 'use strict';
 
-import Image from './Image';
-import { getPrices } from '../schema/priceHelpers';
+const Image = require('./Image');
+const { getPrices } = require('../schema/priceHelpers');
 
 const getImages = (imageGroups, matchingColor) => {
     return ({ allImages, size }) => {
@@ -161,4 +161,4 @@ class Product {
     }
 }
 
-export default Product;
+module.exports = Product;

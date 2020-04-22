@@ -8,34 +8,28 @@ import apollo from 'apollo-server';
 import Basket from '../models/Basket';
 import { getCommerceClientConfig } from '@sfcc-core/apiconfig';
 import {
-    getUserFromContext,
-    AppContext,
+    getSessionFromContext,
     requestWithTokenRefresh,
 } from '@sfcc-core/core-graphql';
 import CommerceSdk from 'commerce-sdk';
 import { BasketT } from 'commerce-sdk/dist/checkout/shopperBaskets/shopperBaskets.types';
-import { Config } from '@sfcc-core/core';
 import { getPrices } from '@sfcc-bff/productapi';
 
 const { ApolloError } = apollo;
 const NO_BASKET_CREATED = `No Basket has been created yet.`;
 
-const getBasketClient = async (
-    config: Config,
-    context: AppContext,
-    refresh = false,
-) => {
+const getBasketClient = async (config: any, context: any, refresh = false) => {
     const clientConfig = getCommerceClientConfig(config);
     clientConfig.headers.authorization =
-        (await getUserFromContext(context, refresh))?.token ?? '';
+        (await getSessionFromContext(config, context, refresh))?.token ?? '';
 
     return new CommerceSdk.Checkout.ShopperBaskets(clientConfig);
 };
 
-const getProductClient = async (config: Config, context: AppContext) => {
+const getProductClient = async (config: any, context: any) => {
     const clientConfig = getCommerceClientConfig(config);
     clientConfig.headers.authorization =
-        (await getUserFromContext(context))?.token ?? '';
+        (await getSessionFromContext(config, context))?.token ?? '';
     return new CommerceSdk.Product.ShopperProducts(clientConfig);
 };
 
@@ -46,18 +40,15 @@ const getProductClient = async (config: Config, context: AppContext) => {
  * @param refresh request a new basket when true
  */
 const getBasketId = async (basketClient, context, refresh = false) => {
-    let basketId = context.getSessionProperty('basketId');
-    if (!basketId || refresh) {
+    let session = context.getSession();
+    if (!session.basketId || refresh) {
         let customerBasket = await basketClient.createBasket({
             body: {},
         });
-        context.setSessionProperty(
-            'basketId',
-            customerBasket.basketId as string,
-        );
-        basketId = customerBasket.basketId as string;
+        session.basketId = customerBasket.basketId;
+        context.updateSession(session);
     }
-    return basketId;
+    return session.basketId;
 };
 
 /**
@@ -71,8 +62,8 @@ const getBasketId = async (basketClient, context, refresh = false) => {
 const addProductToBasket = async (
     productId: string,
     quantity: number,
-    config: Config,
-    context: AppContext,
+    config: any,
+    context: any,
 ) => {
     return requestWithTokenRefresh(async refresh => {
         const basketClient = await getBasketClient(config, context, refresh);
@@ -84,7 +75,7 @@ const addProductToBasket = async (
     });
 };
 
-const getBasketProductCount = async (config: Config, context: AppContext) => {
+const getBasketProductCount = async (config: any, context: any) => {
     let basketId = context.getSessionProperty('basketId');
     let basketProductCount = 0;
     // If No basket has been created yet, return 0
@@ -115,8 +106,8 @@ const getBasketProductCount = async (config: Config, context: AppContext) => {
  * @param productIds
  */
 const getProductsDetails = async (
-    config: Config,
-    context: AppContext,
+    config: any,
+    context: any,
     productIds: string,
 ) => {
     const productClient = await getProductClient(config, context);
@@ -130,8 +121,8 @@ const getProductsDetails = async (
 
 const getFullProductItems = async (
     apiBasket: BasketT,
-    config: Config,
-    context: AppContext,
+    config: any,
+    context: any,
 ) => {
     let basket = apiBasket;
     if (basket.productItems) {
@@ -174,8 +165,8 @@ const getFullProductItems = async (
     return basket;
 };
 
-const getBasket = async (config: Config, context: AppContext) => {
-    let basketId = context.getSessionProperty('basketId');
+const getBasket = async (config: any, context: any) => {
+    let { basketId } = context.getSession();
     // If No basket has been created yet, return error
     if (!basketId) {
         throw new ApolloError(NO_BASKET_CREATED);
@@ -222,8 +213,8 @@ const getBasket = async (config: Config, context: AppContext) => {
 const getShippingMethods = async (
     basketId: string,
     shipmentId: string,
-    config: Config,
-    context: AppContext,
+    config: any,
+    context: any,
 ) => {
     const basketClient = await getBasketClient(config, context);
 
@@ -238,8 +229,8 @@ const getShippingMethods = async (
 const updateShippingMethod = async (
     shipmentId: string,
     shippingMethodId: string,
-    config: Config,
-    context: AppContext,
+    config: any,
+    context: any,
 ) => {
     const basketId = context.getSessionProperty('basketId');
     if (!basketId) {
@@ -265,8 +256,8 @@ const updateShippingMethod = async (
 
 const removeItemFromBasket = async (
     itemId: string,
-    config: Config,
-    context: AppContext,
+    config: any,
+    context: any,
 ) => {
     const basketId = context.getSessionProperty('basketId');
     const basketClient = await getBasketClient(config, context);
@@ -281,8 +272,8 @@ const removeItemFromBasket = async (
 
 const addCouponToBasket = async (
     couponCode: string,
-    config: Config,
-    context: AppContext,
+    config: any,
+    context: any,
 ) => {
     const basketId = context.getSessionProperty('basketId');
     if (!basketId) {
@@ -306,8 +297,8 @@ const addCouponToBasket = async (
 
 const removeCouponFromBasket = async (
     couponItemId: string,
-    config: Config,
-    context: AppContext,
+    config: any,
+    context: any,
 ) => {
     const basketId = context.getSessionProperty('basketId');
     if (!basketId) {
@@ -328,14 +319,10 @@ const removeCouponFromBasket = async (
     return basket;
 };
 
-export const basketResolver = (config: Config) => {
+export const basketResolver = (config: any) => {
     return {
         Query: {
-            getBasket: async (
-                _: never,
-                _params: never,
-                context: AppContext,
-            ) => {
+            getBasket: async (_: never, _params: never, context: any) => {
                 const apiBasket = await getBasket(config, context);
 
                 return new Basket(apiBasket);
@@ -343,7 +330,7 @@ export const basketResolver = (config: Config) => {
             getBasketProductCount: async (
                 _: never,
                 _params: never,
-                context: AppContext,
+                context: any,
             ) => {
                 return await getBasketProductCount(config, context);
             },
@@ -352,7 +339,7 @@ export const basketResolver = (config: Config) => {
             addProductToBasket: async (
                 _: never,
                 parameters: { productId: string; quantity: number },
-                context: AppContext,
+                context: any,
             ) => {
                 const { productId, quantity } = parameters;
                 let apiBasket = await addProductToBasket(
@@ -367,7 +354,7 @@ export const basketResolver = (config: Config) => {
             updateShippingMethod: async (
                 _: never,
                 parameters: { shipmentId: string; shippingMethodId: string },
-                context: AppContext,
+                context: any,
             ) => {
                 const { shipmentId, shippingMethodId } = parameters;
                 const apiBasket = await updateShippingMethod(
@@ -382,7 +369,7 @@ export const basketResolver = (config: Config) => {
             removeItemFromBasket: async (
                 _: never,
                 parameters: { itemId: string },
-                context: AppContext,
+                context: any,
             ) => {
                 const { itemId } = parameters;
                 const apiBasket = await removeItemFromBasket(
@@ -395,7 +382,7 @@ export const basketResolver = (config: Config) => {
             addCouponToBasket: async (
                 _: never,
                 parameters: { couponCode: string },
-                context: AppContext,
+                context: any,
             ) => {
                 const apiBasket = await addCouponToBasket(
                     parameters.couponCode,
@@ -407,7 +394,7 @@ export const basketResolver = (config: Config) => {
             removeCouponFromBasket: async (
                 _: never,
                 parameters: { couponItemId: string },
-                context: AppContext,
+                context: any,
             ) => {
                 const apiBasket = await removeCouponFromBasket(
                     parameters.couponItemId,

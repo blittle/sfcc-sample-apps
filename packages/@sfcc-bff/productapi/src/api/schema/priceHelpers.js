@@ -39,7 +39,7 @@ const getLowestPromotionalPrice = promotions => {
     return null;
 };
 
-export const getPrices = apiProduct => {
+exports.getPrices = apiProduct => {
     let lowestPromotionalPrice = getLowestPromotionalPrice(
         apiProduct.productPromotions,
     );

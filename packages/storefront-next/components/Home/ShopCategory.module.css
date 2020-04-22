@@ -1,0 +1,51 @@
+.shopCategoryComponent {
+    background-image: url('/images/homepage/gray.jpg');
+    position: relative;
+    padding: 1em 0;
+}
+
+.shopCategoryHeader {
+    margin-top: 0;
+    margin-bottom: 0;
+}
+
+.shopCategoryHeader h3 {
+    margin-bottom: 0;
+}
+
+.shopCategoryLabel {
+    margin-top: 0;
+    margin-bottom: 0;
+}
+
+.shopCategoryHeader :global(.mw-100) {
+    margin-top: 0;
+    margin-bottom: 0;
+}
+
+.shopCategoryLabelA {
+    text-decoration: underline;
+}
+
+@media (max-width: 767px) {
+    .shopCategoryComponent {
+        line-height: 2em;
+    }
+    .shopCategoryHeader h3 {
+        margin-top: 0.5em;
+        margin-bottom: 0;
+    }
+}
+
+@media (min-width: 768px) {
+    .shopCategoryComponent {
+        padding: 2em 4em;
+    }
+}
+
+@media (min-width: 992px) {
+    .shopCategoryLabelA {
+        text-decoration: underline;
+        font-size: 1.1em;
+    }
+}

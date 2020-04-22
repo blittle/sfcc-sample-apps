@@ -1,0 +1,48 @@
+.imageHero {
+    width: 100%;
+}
+
+.heroBannerText {
+    position: absolute;
+    top: 57%;
+    transform: translate(-50%, -50%);
+}
+
+.heroBannerText p {
+    text-decoration: underline;
+    margin-top: 1em;
+    color: #fff;
+    font-weight: 400;
+}
+
+@media (max-width: 767px) {
+    .heroBannerText {
+        top: 50%;
+        left: 50%;
+        white-space: nowrap;
+    }
+    .heroBannerText p {
+        text-align: center;
+        font-size: 1.3125rem;
+    }
+}
+
+@media (min-width: 768px) {
+    .heroBannerText {
+        left: 35%;
+        text-align: left;
+    }
+    .heroBannerText p {
+        font-size: 1.67rem;
+    }
+}
+
+@media (min-width: 992px) {
+    .heroBannerText {
+        left: 25%;
+        text-align: left;
+    }
+    .heroBannerText p {
+        font-size: 1.87875rem;
+    }
+}

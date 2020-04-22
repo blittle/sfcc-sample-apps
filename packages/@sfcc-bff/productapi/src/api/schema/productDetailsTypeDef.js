@@ -6,9 +6,9 @@
 */
 'use strict';
 
-import { gql } from 'apollo-server-core';
+const { gql } = require('apollo-server-core');
 
-export const typeDef = gql`
+exports.typeDef = gql`
     extend type Query {
         product(id: String!, selectedColor: String): Product
     }

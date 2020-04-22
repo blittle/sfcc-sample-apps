@@ -14,4 +14,5 @@ class Image {
         this.style = `background: url(${this.link});`;
     }
 }
-export default Image;
+
+module.exports = Image;

@@ -1,0 +1,55 @@
+.pdp {
+    display: flex;
+    color: #222;
+    font-weight: 900;
+}
+@media (max-width: 767px) {
+    .pdp {
+        font-size: 1.3125rem;
+        justify-content: center;
+    }
+}
+@media (min-width: 768px) {
+    .pdp {
+        font-size: 1.67rem;
+        justify-content: left;
+    }
+}
+@media (min-width: 992px) {
+    .pdp {
+        font-size: 1.87875rem;
+        justify-content: left;
+    }
+}
+
+.tile {
+    display: flex;
+    color: #222;
+    font-weight: 900;
+}
+
+.salePrice {
+    margin-right: 0.625rem;
+    color: #c00;
+}
+
+.strikeThrough {
+    text-decoration: line-through;
+    color: #999;
+    font-weight: 400;
+}
+
+.basket {
+    display: block;
+}
+.basket .salePrice {
+    display: block;
+    color: #222;
+    font-weight: bold;
+}
+.basket .price {
+    font-weight: bold;
+}
+.basket .strike-through {
+    font-size: 1rem;
+}

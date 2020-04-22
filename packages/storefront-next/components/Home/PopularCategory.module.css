@@ -1,0 +1,35 @@
+.popularCategoryLink {
+    margin-bottom: 0.625rem;
+    text-align: center;
+}
+
+.imageWrapper {
+    width: 100%;
+    height: 100%;
+    background-repeat: no-repeat;
+}
+
+.imageCropper {
+    margin: auto;
+}
+
+@media (max-width: 767px) {
+    .imageCropper {
+        width: 5.937rem;
+        height: 5.937rem;
+    }
+}
+
+@media (min-width: 768px) {
+    .imageCropper {
+        width: 6.125rem;
+        height: 6.125rem;
+    }
+}
+
+@media (min-width: 992px) {
+    .imageCropper {
+        width: 10rem;
+        height: 10rem;
+    }
+}

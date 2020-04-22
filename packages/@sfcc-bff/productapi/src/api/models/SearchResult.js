@@ -6,9 +6,9 @@
 */
 'use strict';
 
-import SearchResultProduct from './SearchResultProduct';
+const SearchResultProduct = require('./SearchResultProduct');
 
-export default class SearchResult {
+module.exports = class SearchResult {
     constructor(searchResult, filterParams) {
         this.limit = searchResult.limit;
         this.productHits =
@@ -36,4 +36,4 @@ export default class SearchResult {
         });
         this.sortingOptions = searchResult.sortingOptions;
     }
-}
+};

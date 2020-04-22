@@ -6,7 +6,7 @@
 */
 'use strict';
 
-import Image from './Image';
+const Image = require('./Image');
 
 var getColorSwatches = variationAttributes => {
     var colorSwatches = [];
@@ -51,4 +51,4 @@ class SearchResultProduct {
     }
 }
 
-export default SearchResultProduct;
+module.exports = SearchResultProduct;

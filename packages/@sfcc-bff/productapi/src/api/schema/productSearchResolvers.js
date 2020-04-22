@@ -4,14 +4,14 @@
     SPDX-License-Identifier: BSD-3-Clause
     For full license text, see the LICENSE file in the repo root or https://opensource.org/licenses/BSD-3-Clause
 */
-import * as CommerceSdk from 'commerce-sdk';
-import { getCommerceClientConfig } from '@sfcc-core/apiconfig';
-import SearchResult from '../models/SearchResult';
+const CommerceSdk = require('commerce-sdk');
+const { getCommerceClientConfig } = require('@sfcc-core/apiconfig');
+const SearchResult = require('../models/SearchResult');
 
-import {
+const {
     getUserFromContext,
     requestWithTokenRefresh,
-} from '@sfcc-core/core-graphql';
+} = require('@sfcc-core/core-graphql');
 
 const getSearchClient = async (config, context, refresh = false) => {
     const clientConfig = getCommerceClientConfig(config);
@@ -65,7 +65,7 @@ const searchProduct = async (config, query, filterParams, context) => {
     });
 };
 
-export const resolver = config => {
+exports.resolver = config => {
     return {
         Query: {
             productSearch: async (_, { query, filterParams }, context) => {

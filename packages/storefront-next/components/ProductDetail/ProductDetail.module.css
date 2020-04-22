@@ -1,0 +1,34 @@
+.productDetailPage {
+    margin-top: 2em;
+    margin-bottom: 2em;
+}
+
+@media (max-width: 767px) {
+    .productDetailPage {
+        margin-top: 0;
+        margin-bottom: 0;
+    }
+}
+
+@media (max-width: 767px) {
+    .productImages {
+        margin: 0;
+        padding: 0;
+    }
+}
+
+.shoppingBag {
+    margin-right: 0.625rem;
+}
+
+.descriptions {
+    margin-top: 1.875rem;
+}
+
+.promotions {
+    margin-bottom: 1rem;
+}
+
+.button:disabled {
+    opacity: 0.3;
+}

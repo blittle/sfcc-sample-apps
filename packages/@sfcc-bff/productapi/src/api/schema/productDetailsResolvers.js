@@ -6,18 +6,18 @@
 */
 'use strict';
 
-import Product from '../models/Product';
-import { getCommerceClientConfig } from '@sfcc-core/apiconfig';
-import * as CommerceSdk from 'commerce-sdk';
-import {
-    getUserFromContext,
+const Product = require('../models/Product');
+const { getCommerceClientConfig } = require('@sfcc-core/apiconfig');
+const CommerceSdk = require('commerce-sdk');
+const {
+    getSessionFromContext,
     requestWithTokenRefresh,
-} from '@sfcc-core/core-graphql';
+} = require('@sfcc-core/core-graphql');
 
 const getProductClient = async (config, context, refresh) => {
     const clientConfig = getCommerceClientConfig(config);
     clientConfig.headers.authorization = (
-        await getUserFromContext(context, refresh)
+        await getSessionFromContext(config, context, refresh)
     ).token;
     return new CommerceSdk.Product.ShopperProducts(clientConfig);
 };
@@ -25,9 +25,6 @@ const getProductClient = async (config, context, refresh) => {
 const getProductDetail = async (config, id, context) => {
     return requestWithTokenRefresh(async refresh => {
         // clear any basketId when we get a new shopper token.
-        if (refresh) {
-            context.setSessionProperty('basketId', undefined);
-        }
         const productClient = await getProductClient(config, context, refresh);
         return productClient.getProduct({
             parameters: {
@@ -38,7 +35,7 @@ const getProductDetail = async (config, id, context) => {
     });
 };
 
-export const resolver = config => {
+exports.resolver = config => {
     return {
         Query: {
             product: async (_, { id, selectedColor }, context) => {

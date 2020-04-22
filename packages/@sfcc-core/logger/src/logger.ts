@@ -1,13 +1,7 @@
-import { core, LOGGER_KEY, Logger as CoreLogger } from '@sfcc-core/core';
 import loglevel from 'loglevel';
 
-core.registerService(LOGGER_KEY, function() {
-    return new Logger(loglevel);
-});
-
-export { LOGGER_KEY };
 export const LEVELS = loglevel.levels;
-export class Logger implements CoreLogger {
+export class Logger {
     apilog: loglevel.RootLogger;
 
     constructor(apilog: loglevel.RootLogger) {

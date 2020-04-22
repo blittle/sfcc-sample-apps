@@ -19,11 +19,9 @@
   },
   "dependencies": {
     "@sfcc-core/apiconfig": "1.0.0-alpha.1",
-    "@sfcc-core/core": "1.0.0-alpha.1",
-    "apollo-server": "^2.3.3",
-    "graphql-passport": "^0.6.1",
-    "graphql-tag": "^2.10.1",
-    "graphql-tools": "^4.0.4"
+    "apollo-server": "^2.12.0",
+    "graphql-tag": "^2.10.3",
+    "graphql-tools": "^5.0.0"
   },
   "husky": {
     "hooks": {

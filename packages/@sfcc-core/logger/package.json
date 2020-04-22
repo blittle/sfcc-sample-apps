@@ -6,6 +6,7 @@
     "dist"
   ],
   "scripts": {
+    "clean": "rm -rf dist",
     "start:dev": "tsdx watch",
     "build": "tsdx build",
     "test:unit": "tsdx test --collect-coverage",

@@ -9,7 +9,7 @@
     "talonVersion": "0.18.12"
   },
   "scripts": {
-    "build": "lerna run build --stream --concurrency 1 && lerna run build:next",
+    "build": "lerna run build --stream && lerna run build:next",
     "build:app": "lerna run build --scope storefront-next --stream",
     "lint": "lerna run lint --stream",
     "lint:fix": "lerna run lint:fix --stream",

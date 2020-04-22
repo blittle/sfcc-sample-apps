@@ -4,6 +4,7 @@
   "description": "",
   "main": "./src/productapi.js",
   "scripts": {
+    "clean": "rm -rf dist",
     "lint": "eslint src",
     "lint:fix": "eslint src --fix",
     "pack": "npm pack",

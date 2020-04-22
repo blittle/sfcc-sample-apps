@@ -17,11 +17,11 @@
     "clean:stats": "lerna run clean:stats --stream",
     "test": "lerna run test:unit --stream",
     "test:watch": "lerna run test:unit:watch --stream",
-    "start": "yarn start:lwc",
+    "start": "yarn start:next",
     "start:dev": "lerna run dev --scope storefront-next --stream",
     "start:watch": "yarn start:lwc:watch",
     "stop": "yarn stop:lwc",
-    "start:lwc": "lerna run start --scope storefront-lwc --stream",
+    "start:next": "lerna run start --scope storefront-next --stream",
     "start:lwc:watch": "lerna run start:watch --scope storefront-lwc --stream",
     "stop:lwc": "lerna run stop --scope storefront-lwc --stream"
   },

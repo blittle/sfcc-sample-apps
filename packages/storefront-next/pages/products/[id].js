@@ -87,13 +87,14 @@ export default function Product({ resp }) {
 }
 
 export const getStaticPaths = async () => {
-    // '25592581M',
-    // '25752981M',
-    // '25762732M',
-    // '25553417M',
-    // '25686514M',
-    // '25720044M',
-    const ids = [];
+    const ids = [
+        '25592581M',
+        '25752981M',
+        '25762732M',
+        '25553417M',
+        '25686514M',
+        '25720044M',
+    ];
     return { paths: ids.map(id => ({ params: { id } })), fallback: true };
 };
 

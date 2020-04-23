@@ -18,7 +18,7 @@ try {
     );
     setConfig(config);
 } catch (e) {
-    console.log('no config file using vars: ', getConfig())
+    console.log('no config file using vars env vars')
 }
 
 console.log(getConfig());

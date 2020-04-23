@@ -18,10 +18,7 @@ try {
     );
     setConfig(config);
 } catch (e) {
-    if (process.env !== 'production') {
-        console.error('invalid configuration file', e);
-        process.exit();
-    }
+    console.log('no config file using vars: ', getConfig())
 }
 
 console.log(getConfig());

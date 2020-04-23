@@ -63,6 +63,7 @@ export default function ProductDetail({ product }) {
                         <a
                             className="carousel-control-prev"
                             role="button"
+                            onClick={prevImage}
                             data-slide="prev"
                         >
                             <span
@@ -72,6 +73,7 @@ export default function ProductDetail({ product }) {
                             <span className="sr-only">Previous</span>
                         </a>
                         <a
+                            onClick={nextImage}
                             className="carousel-control-next"
                             role="button"
                             data-slide="next"

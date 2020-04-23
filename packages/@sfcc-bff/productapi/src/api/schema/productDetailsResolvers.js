@@ -39,6 +39,7 @@ exports.resolver = config => {
     return {
         Query: {
             product: async (_, { id, selectedColor }, context) => {
+                console.log('bret', config);
                 const apiProduct = await getProductDetail(config, id, context);
                 return new Product(apiProduct, selectedColor);
             },

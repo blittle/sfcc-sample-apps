@@ -11,6 +11,20 @@ export default function ProductDetail({ product }) {
     const [readyToAddToBasket, setReadyToAddToBasket] = React.useState(false);
     const [selectedQty, setSelectedQty] = React.useState(0);
 
+    function nextImage() {
+        if (activeImage + 1 === product.images.length) {
+            setActiveImage(0);
+        } else {
+            setActiveImage(activeImage + 1);
+        }
+    }
+
+    function prevImage() {
+        setActiveImage(
+            activeImage === 0 ? product.images.length - 1 : activeImage - 1,
+        );
+    }
+
     function updateProductDetails() {}
 
     return (

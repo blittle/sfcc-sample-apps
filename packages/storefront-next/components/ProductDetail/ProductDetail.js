@@ -38,10 +38,7 @@ export default function ProductDetail({ product }) {
                                     key={image.link}
                                 >
                                     <img
-                                        src={
-                                            'https://edge.disstg.commercecloud.salesforce.com/dw/image/v2/ZZEU_012/on/demandware.static/-/Sites-apparel-m-catalog/default/dwb19ccf58/images/large/PG.52002RUBN4Q.NAVYWL.PZ.jpg' ||
-                                            image.link
-                                        }
+                                        src={image.link}
                                         className="d-block img-fluid"
                                         alt={image.atl}
                                     />

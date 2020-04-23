@@ -24,6 +24,8 @@ try {
     }
 }
 
+console.log(getConfig());
+
 export const schema = makeExecutableSchema({
     typeDefs: [
         gql`
